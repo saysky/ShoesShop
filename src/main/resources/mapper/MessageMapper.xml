@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mall.dao.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.example.mall.entity.Message">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="friend_id" property="friendId"/>
+        <result column="user_id" property="userId"/>
+        <result column="sender_id" property="senderId"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="create_time" property="createTime"/>
+        <association property="user" javaType="com.example.mall.entity.User">
+            <id column="user_id" jdbcType="BIGINT" property="userId"/>
+            <result column="u_nick_name" jdbcType="VARCHAR" property="nickName"/>
+            <result column="u_login_name" jdbcType="VARCHAR" property="loginName"/>
+            <result column="u_avatar" jdbcType="VARCHAR" property="avatar"/>
+        </association>
+        <association property="friend" javaType="com.example.mall.entity.User">
+            <id column="friend_id" jdbcType="BIGINT" property="userId"/>
+            <result column="f_nick_name" jdbcType="VARCHAR" property="nickName"/>
+            <result column="f_login_name" jdbcType="VARCHAR" property="loginName"/>
+            <result column="f_avatar" jdbcType="VARCHAR" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into t_message
+    ( id ,content ,type ,status ,friend_id ,
+    user_id ,sender_id ,receiver_id ,create_time)
+    values (
+       #{id}, #{content}, #{type}, #{status}, #{friendId},
+        #{userId}, #{senderId}, #{receiverId}, #{createTime}
+    )
+    </insert>
+
+    <update id="update">
+        update t_message
+        set content = #{content}, type = #{type},  status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM t_message WHERE id = #{id}
+    </delete>
+
+
+    <select id="queryById" resultType="com.example.mall.entity.Message">
+        SELECT
+            id ,content ,type ,status ,friend_id ,user_id ,sender_id ,receiver_id ,create_time
+         FROM t_message WHERE id = #{id}
+    </select>
+
+    <select id="queryAllByLimit" resultType="com.example.mall.entity.Message">
+        SELECT
+            id ,content ,type ,status ,friend_id ,user_id ,sender_id ,receiver_id ,create_time
+         FROM t_message 
+          offset #{offset} limit #{limit}
+    </select>
+
+    <select id="queryAll" resultType="com.example.mall.entity.Message">
+        SELECT
+        id ,content ,type ,status ,friend_id ,user_id ,sender_id ,receiver_id ,create_time
+        FROM t_message
+        <where>
+            1 = 1
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="getChatList" resultMap="BaseResultMap">
+        SELECT
+            t.id , t.content ,t.type ,t.status ,t.friend_id ,t.user_id ,
+            t.sender_id ,t.receiver_id ,t.create_time,
+            u.nick_name f_nick_name,
+            u.login_name f_login_name, u.avatar f_avatar
+        FROM  t_message t
+        left join t_user u on u.user_id = t.friend_id
+        WHERE t.id IN (SELECT MAX(id) AS id
+                FROM t_message WHERE user_id = #{userId} AND
+                status != 3 GROUP BY friend_id)
+        ORDER BY t.id DESC
+    </select>
+
+    <select id="findByUserAndFriendAndStatusIn" resultMap="BaseResultMap">
+        SELECT
+        t.id , t.content , t.type , t.status , t.friend_id ,
+        t.user_id ,t.sender_id ,t.receiver_id ,t.create_time,
+         u.nick_name u_nick_name, u.login_name u_login_name, u.avatar u_avatar,
+         u2.nick_name f_nick_name, u2.login_name f_login_name, u2.avatar f_avatar
+        FROM t_message t
+        LEFT JOIN t_user u ON u.user_id = t.user_id
+        LEFT JOIN t_user u2 ON u2.user_id = t.friend_id
+        <where>
+            t.user_id = #{userId} AND friend_id = #{friendId} AND status IN
+            (
+            <foreach collection="statusList" item="item" separator=",">
+                #{item}
+            </foreach>
+
+            )
+        </where>
+    </select>
+
+    <select id="listCountNotReadMessageSize" resultType="java.lang.Integer">
+        SELECT count(id) FROM t_message WHERE user_id = #{userId}
+        AND status = #{status}
+        GROUP BY friend_id ORDER BY Max(id) DESC
+    </select>
+
+
+    <select id="findByUserAndStatus" resultType="com.example.mall.entity.Message">
+        SELECT
+        id ,content ,type ,status ,friend_id ,user_id ,sender_id ,receiver_id ,create_time
+        FROM t_message
+        WHERE id IN(SELECT Max(id) AS id FROM t_message WHERE user_id = #{userId}
+        AND status = #{status} GROUP BY friend_id) ORDER BY id DESC
+    </select>
+
+
+    <select id="countByUserAndStatus" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM t_message
+        WHERE user_id = #{userId} AND status = #{status}
+    </select>
+
+    <select id="findTopByUserAndFriendAndStatusInOrderByIdDesc" resultType="com.example.mall.entity.Message">
+        SELECT
+        id ,content ,type ,status ,friend_id ,user_id ,sender_id ,receiver_id ,create_time
+        FROM t_message
+        <where>
+            user_id = #{userId} AND friend_id = #{friendId} AND status IN
+            (
+            <foreach collection="statusList" item="item" separator=",">
+                #{item}
+            </foreach>
+
+            )
+        </where>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+
+</mapper>
