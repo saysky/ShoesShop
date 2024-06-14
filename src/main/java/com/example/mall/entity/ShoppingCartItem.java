@@ -102,4 +102,3 @@ public class ShoppingCartItem {
     public void setIsChecked(Integer isChecked) {
         this.isChecked = isChecked;
     }
-}

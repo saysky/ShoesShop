@@ -25,4 +25,3 @@ public interface ShoppingCartItemMapper {
     int updateByPrimaryKey(ShoppingCartItem record);
 
     int deleteBatch(List<Long> ids);
-}

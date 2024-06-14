@@ -201,4 +201,3 @@
       update_user = #{updateUser,jdbcType=INTEGER}
     where config_id = #{configId,jdbcType=BIGINT}
   </update>
-</mapper>

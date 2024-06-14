@@ -32,4 +32,3 @@ public class JsonUtil {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(obj);
     }
-}

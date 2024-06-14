@@ -33,4 +33,3 @@ public interface OrderMapper {
 
     int checkDone(@Param("orderIds") List<Long> asList);
 
-}

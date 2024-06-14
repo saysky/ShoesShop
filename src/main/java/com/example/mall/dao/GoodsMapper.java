@@ -47,4 +47,3 @@ public interface GoodsMapper {
      * @return
      */
     List<String> getSearchHelper(String keyword);
-}

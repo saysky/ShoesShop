@@ -263,4 +263,3 @@
             #{id}
         </foreach>
     </update>
-</mapper>

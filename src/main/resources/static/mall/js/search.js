@@ -15,4 +15,3 @@ function search() {
     if (q && q != '') {
         window.location.href = '/search?keyword=' + q;
     }
-}

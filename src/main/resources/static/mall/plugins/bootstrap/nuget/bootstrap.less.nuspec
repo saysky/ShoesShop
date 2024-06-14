@@ -25,4 +25,3 @@
     <file src="fonts\*.*" target="content\Content\fonts" />
     <file src="dist\js\bootstrap*.js" target="content\Scripts" />
   </files>
-</package>

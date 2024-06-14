@@ -168,4 +168,3 @@
             #{id}
         </foreach>
     </update>
-</mapper>

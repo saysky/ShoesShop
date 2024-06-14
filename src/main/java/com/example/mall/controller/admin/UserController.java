@@ -59,4 +59,3 @@ public class UserController {
             return ResultGenerator.genFailResult("禁用失败");
         }
     }
-}

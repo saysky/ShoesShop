@@ -88,4 +88,3 @@ public class MessageVO {
     public void setCount(Integer count) {
         this.count = count;
     }
-}

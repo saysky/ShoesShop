@@ -82,4 +82,3 @@ public class Address implements Serializable {
         this.createTime = createTime;
     }
 
-}

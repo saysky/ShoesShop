@@ -178,4 +178,3 @@ public class Message implements Serializable {
         this.content = content;
         this.status = status;
     }
-}

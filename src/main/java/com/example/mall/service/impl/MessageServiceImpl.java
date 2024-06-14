@@ -157,4 +157,3 @@ public class MessageServiceImpl implements MessageService {
     public List<Integer> listCountNotReadMessageSize(Long userId, Integer status) {
         return messageDao.listCountNotReadMessageSize(userId, status);
     }
-}

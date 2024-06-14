@@ -26,4 +26,3 @@ public interface CarouselMapper {
     int deleteBatch(Integer[] ids);
 
     List<Carousel> findCarouselsByNum(@Param("number") int number);
-}

@@ -248,4 +248,3 @@
       path_trace = #{pathTrace,jdbcType=VARCHAR}
     where category_id = #{categoryId,jdbcType=BIGINT}
   </update>
-</mapper>

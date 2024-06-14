@@ -48,4 +48,3 @@ $('.all-sort-list > .item').hover(function () {
 }, function () {
     $(this).removeClass('hover');
     $(this).children('.item-list').css('display', 'none');
-});

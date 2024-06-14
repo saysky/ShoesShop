@@ -32,4 +32,3 @@ public interface GoodsCategoryMapper {
     List<GoodsCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Long> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
 
     List<GoodsCategory> getGoodsCategoryWithGoods();
-}

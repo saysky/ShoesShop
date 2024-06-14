@@ -147,4 +147,3 @@ public interface MessageService {
     List<Integer> listCountNotReadMessageSize(Long userId, Integer status);
 
 
-}

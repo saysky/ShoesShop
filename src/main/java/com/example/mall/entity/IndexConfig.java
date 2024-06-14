@@ -137,4 +137,3 @@ public class IndexConfig {
         sb.append("]");
         return sb.toString();
     }
-}

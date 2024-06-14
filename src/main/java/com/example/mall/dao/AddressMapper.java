@@ -70,4 +70,3 @@ public interface AddressMapper {
      */
     Address getDefaultAddress(Long userId);
 
-}

@@ -71,4 +71,3 @@ public interface AddressService {
      */
     Address getDefaultAddress(Long userId);
 
-}

@@ -53,4 +53,3 @@
          FROM t_address
          WHERE user_id = #{userId} and is_default = 1 limit 1
     </select>
-</mapper>

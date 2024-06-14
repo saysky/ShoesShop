@@ -157,4 +157,3 @@ public class GoodsCategory {
     public void setPathTrace(String pathTrace) {
         this.pathTrace = pathTrace;
     }
-}

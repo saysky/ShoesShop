@@ -115,4 +115,3 @@ public class Carousel {
         sb.append("]");
         return sb.toString();
     }
-}
